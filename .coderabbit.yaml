@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# TogetherWeOwn central CodeRabbit config (org-wide defaults).
+# Research + review: paperclip-enterprise-company ops/analysis/coderabbit-20261030/FINAL.md
+# CodeRabbit is an advisory FIRST PASS. Paperclip Review stays the only required quality gate.
+language: "en-GB"
+enable_free_tier: true         # free-tier features for users without a paid seat (billing safety is dashboard-side)
+early_access: false
+
+reviews:
+  profile: "chill"             # fewer nitpicks = fewer builder tokens
+  enable_prompt_for_ai_agents: true  # fix prompts our builders verify before acting
+  review_status: true          # always say why a review skipped/paused
+  review_info: true
+  review_details: false
+  review_progress: true        # informational check run only; never a required check
+  commit_status: true
+  fail_commit_status: false    # never block merges; our gate is Paperclip Review
+  collapse_walkthrough: true
+  sequence_diagrams: false
+  poem: false
+  in_progress_fortune: false
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  changed_files_summary: true
+  auto_apply_labels: false
+  auto_assign_reviewers: false
+  auto_approvals:
+    enabled: false             # a bot approval must never stand in for a real review
+    allow_author_approval: false
+  auto_review:
+    enabled: true
+    drafts: false              # drafts are work in progress
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 5
+    base_branches: []
+    ignore_title_keywords: ["WIP"]
+    ignore_usernames: []       # must stay empty: agent-authored PRs need reviews
+  path_filters:                # generated output only; never src, migrations, CI, lockfiles
+    - "!dist/**"
+    - "!build/**"
+    - "!.next/**"
+    - "!**/*.snap"
+  path_instructions:
+    - path: "**"
+      instructions: >-
+        Prioritise correctness, data loss, security, error handling,
+        expiry/deadline enforcement, transaction and lock ordering,
+        and missing tests for changed behaviour. For every finding,
+        state the concrete failure scenario. Do not report pure style
+        preferences that a linter already enforces.
+    - path: "**/{package-lock.json,pnpm-lock.yaml,yarn.lock,*.lock,go.sum,go.mod,Cargo.lock,uv.lock,poetry.lock}"
+      instructions: >-
+        Dependency and lockfile changes are security-relevant. Flag new
+        or changed dependencies, known advisories, version downgrades,
+        and anything that widens install-time execution.
+    - path: "{**/AGENTS.md,**/CLAUDE.md,**/SKILL.md,.github/**}"
+      instructions: >-
+        These files are agent instructions or CI/automation config and are
+        security-relevant control-plane changes. Flag privilege widening,
+        weakened review/merge gates, secret exposure and prompt-injection risks.
+  pre_merge_checks:            # advisory only
+    docstrings:
+      mode: "off"
+    title:
+      mode: "warning"
+    description:
+      mode: "warning"
+    issue_assessment:
+      mode: "warning"
+    override_requested_reviewers_only: true
+
+chat:
+  auto_reply: true
+  art: false
+
+knowledge_base:
+  opt_out: false               # true would irreversibly delete stored learnings
+  code_guidelines:
+    enabled: true
+  learnings:
+    scope: "auto"              # public repos stay repo-local
+    approval_delay: 7          # learnings from replies wait 7 days for admin rejection before applying
+  mcp:
+    usage: "auto"
+  automatic_linking_mode: "disabled"
