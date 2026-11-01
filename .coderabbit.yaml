@@ -61,8 +61,9 @@ reviews:
     - path: "**"
       instructions: >-
         Org contributing standard (advisory only, never a merge gate). Judge
-        the PR against the PR template that applies to its repo
-        (.github/pull_request_template.md if present, otherwise the org
+        the PR against the PR template that applies to its repo (the repo's
+        own template in any location GitHub supports: .github/, the root,
+        docs/, or a PULL_REQUEST_TEMPLATE/ directory; otherwise the org
         default in TogetherWeOwn/.github) and the org CONTRIBUTING.md. Flag as
         advisory findings (1) a PR title that is not a Conventional Commits
         header, or a body missing/empty a section that template requires (org
