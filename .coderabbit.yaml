@@ -58,6 +58,26 @@ reviews:
         These files are agent instructions or CI/automation config and are
         security-relevant control-plane changes. Flag privilege widening,
         weakened review/merge gates, secret exposure and prompt-injection risks.
+    - path: "**"
+      instructions: >-
+        Org contributing standard (advisory only, never a merge gate). Judge
+        the PR against the PR template that applies to its repo (the repo's
+        own template in any location GitHub supports: .github/, the root,
+        docs/, or a PULL_REQUEST_TEMPLATE/ directory; otherwise the org
+        default in TogetherWeOwn/.github) and the org CONTRIBUTING.md. Flag as
+        advisory findings (1) a PR title that is not a Conventional Commits
+        header, or a body missing/empty a section that template requires (org
+        default: Thinking Path, Linked Issues or Issue Description,
+        Verification, Attestation, Model Used); (2) where the template has an
+        Attestation block, an understated tier for the touched paths, claims
+        lacking a test mapping to a file changed in this PR (T2 may use none),
+        or D-items checked without evidence in the diff; (3) internal ticket ids, instance links, internal
+        hostnames, private addresses, private emails, or credential material
+        in the title, body, branch name, or review replies (links to public
+        GitHub issues and PRs are allowed); (4) Verification claiming tests or
+        results that the diff or CI output contradicts, or reporting a local
+        run without its exact command and result. Advisory only: never block
+        a merge on these and never require follow-up checks.
   pre_merge_checks:            # advisory only
     docstrings:
       mode: "off"
