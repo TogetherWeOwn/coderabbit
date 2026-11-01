@@ -58,6 +58,19 @@ reviews:
         These files are agent instructions or CI/automation config and are
         security-relevant control-plane changes. Flag privilege widening,
         weakened review/merge gates, secret exposure and prompt-injection risks.
+    - path: "**"
+      instructions: >-
+        Org contributing standard (advisory only, never a merge gate): flag as
+        advisory findings (1) a PR title that is not a Conventional Commits
+        header, or a body missing/empty a template section (Thinking Path,
+        Linked Issues or Issue Description, Verification, Attestation,
+        Model Used); (2) an understated Attestation tier for the touched paths,
+        claims with no changed test mapping, or D-items checked without
+        evidence in the diff; (3) internal ticket ids, instance links,
+        hostnames, private addresses, emails, or credential material in the
+        title, body, branch name, or review replies; (4) Verification claiming
+        tests or results not evidenced by the diff or CI output. Advisory
+        only: never block a merge on these and never require follow-up checks.
   pre_merge_checks:            # advisory only
     docstrings:
       mode: "off"
