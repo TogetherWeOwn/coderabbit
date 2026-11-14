@@ -1,0 +1,27 @@
+# The highest changed-path tier wins; sensitive wins overlaps. Unmatched and
+# new paths default to sensitive. For renames, consider both old and new paths.
+# Content triggers always escalate to sensitive: endpoints or input parsing;
+# auth, sessions, crypto, keys, secrets, credentials or permissions; tenant or
+# personal data; SQL, schema or migrations; dependencies and lockfiles (also
+# dev dependencies); CI/workflows; weakened or deleted tests/assertions or
+# lowered gates. Inert prose and test names are not exemptions.
+#
+# Low and ordinary are empty: the README describes the review gate and the
+# only other existing file configures organization-wide review behavior.
+# This source map does not install or enforce a classifier.
+version: 1
+default_tier: sensitive
+tiers:
+  low: []
+  ordinary: []
+  sensitive:
+    - ".coderabbit.yaml"
+    - "README.md"
+    - ".github/review-tiers.yml"
+    - ".github/workflows/**"
+    - ".github/actions/**"
+    - ".github/CODEOWNERS"
+    - "CODEOWNERS"
+    - "AGENTS.md"
+    - "CLAUDE.md"
+    - ".claude/**"
